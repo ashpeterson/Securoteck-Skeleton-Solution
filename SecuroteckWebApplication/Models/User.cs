@@ -21,9 +21,6 @@ namespace SecuroteckWebApplication.Models
         enum Role { Admin, User };
     }
 
-      
-
-
         // TODO: Create a User Class for use with Entity Framework
         // Note that you can use the [key] attribute to set your ApiKey Guid as the primary key  
         #endregion

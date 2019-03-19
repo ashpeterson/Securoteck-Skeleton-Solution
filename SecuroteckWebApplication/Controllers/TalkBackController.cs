@@ -32,11 +32,7 @@ namespace SecuroteckWebApplication.Controllers
                 throw;
                // return new HttpResponseMessage(HttpStatusCode.NotModified);
             }
-              
-
-            
-            
-            //return new HttpResponseMessage(HttpStatusCode.NotModified);
+           //return new HttpResponseMessage(HttpStatusCode.NotModified);
             // TODO: 
             // sort the integers into ascending order
             // send the integers back as the api/talkback/sort response
