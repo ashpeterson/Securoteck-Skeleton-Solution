@@ -96,6 +96,7 @@
     <Compile Include="Controllers\Authorisation\APIAuthorisationHandler.cs" />
     <Compile Include="Controllers\Authorisation\CustomAuthoriseAttribute.cs" />
     <Compile Include="Controllers\TalkBackController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -103,6 +104,14 @@
     <Compile Include="Migrations\201903181816220_Migration1.cs" />
     <Compile Include="Migrations\201903181816220_Migration1.Designer.cs">
       <DependentUpon>201903181816220_Migration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903201046413_Migratio Enum Add.cs" />
+    <Compile Include="Migrations\201903201046413_Migratio Enum Add.Designer.cs">
+      <DependentUpon>201903201046413_Migratio Enum Add.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903201051049_enumtest.cs" />
+    <Compile Include="Migrations\201903201051049_enumtest.Designer.cs">
+      <DependentUpon>201903201051049_enumtest.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\User.cs" />
@@ -124,6 +133,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903181816220_Migration1.resx">
       <DependentUpon>201903181816220_Migration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903201046413_Migratio Enum Add.resx">
+      <DependentUpon>201903201046413_Migratio Enum Add.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903201051049_enumtest.resx">
+      <DependentUpon>201903201051049_enumtest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

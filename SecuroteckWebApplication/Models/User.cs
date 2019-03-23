@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
 using System.Xml;
 
 namespace SecuroteckWebApplication.Models
@@ -11,14 +13,20 @@ namespace SecuroteckWebApplication.Models
     {
         #region Task2
 
-        User() { }
+        public User() { }
 
         [Key]
         public string ApiKey { get; set; }
 
         public string UserName { get; set; }
 
-        enum Role { Admin, User };
+        public Role UserRole { get; set; }
+    }
+
+    public enum Role
+    {
+        Admin,
+        User
     }
 
         // TODO: Create a User Class for use with Entity Framework
@@ -33,8 +41,32 @@ namespace SecuroteckWebApplication.Models
     public class UserDatabaseAccess
     {
         #region Task3 
-        // TODO: Make methods which allow us to read from/write to the database 
-        #endregion
-    }
 
-}
+        
+        public void Create (User user)
+        {
+            UserContext ctx = new UserContext();                
+
+            if (ctx.Users.Add(o => o.ctx. == user))
+            {
+                var id = new Guid();
+                using(var uc = new UserContext())
+                {
+                    user = new User { ApiKey = id.ToString(), UserName = "New User", UserRole = Role.User };              
+                }
+
+           
+                // Match!
+            }
+
+        } 
+
+
+
+             
+
+        
+    }
+     // TODO: Make methods which allow us to read from/write to the database 
+        #endregion
+} 

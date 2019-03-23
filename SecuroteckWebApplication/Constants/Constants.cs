@@ -7,7 +7,7 @@ namespace SecuroteckWebApplication.Constants
 {
     public class Constants
     {
-         const string testURI = "http://secur-o-teck-student-test.azurewebsites.net";
+         const string CONST_testURI = "http://secur-o-teck-student-test.azurewebsites.net";
 
     }
 }
