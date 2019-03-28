@@ -11,33 +11,26 @@ namespace SecuroteckWebApplication.Controllers
     {
         [ActionName("Hello")]
         public string Get()
-        {
-            #region TASK1
-            return "Hello World 123";
-            // TODO: add api/talkback/hello response
-            #endregion
+        {         
+            return "Hello World";          
         }
 
         [ActionName("Sort")]
         public int[] Get([FromUri]int[] integers)
-        {
-            #region TASK1
+        {           
             try
             {
                 var ints = integers.OrderBy(i => i).ToArray();
                 return ints;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
-               // return new HttpResponseMessage(HttpStatusCode.NotModified);
-            }
-           //return new HttpResponseMessage(HttpStatusCode.NotModified);
-            // TODO: 
-            // sort the integers into ascending order
-            // send the integers back as the api/talkback/sort response
-            #endregion
+                throw  e;
+               
+            }       
+           
         }
 
     }
 }
+
