@@ -20,12 +20,37 @@ namespace SecuroteckWebApplication.Controllers
         //If there is no string submitted, the server should return "False - User Does Not Exist! Did you mean to do
         //a POST to create a new user?" in the body of the result with a status code of OK (200).
 
+        /// <summary>
+        /// 4.1 
+        /// </summary>
+        /// <param name="UserName"></param>
+        /// <returns></returns>
+        public User Get (string UserName)  
+        {
+            if(UserName == UserName)
+            {
+                return "True - User Does Exist! Did you mean to do a POST to create a new user? ";
+            }
+            else
+            {
+                return "False - User Does Not Exist!Did you mean to do a POST to create a new user? ";
+            }
 
-        public IEnumerable Get<User>()
+            if(UserName == string.Empty)
+            {
+                return "False - User Does Not Exist! Did you mean to do a POST to create a new user? ";
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UserName"></param>
+        /// <returns></returns>
+        public User Post (string UserName)
         {
 
         }
-
 
 
     }
