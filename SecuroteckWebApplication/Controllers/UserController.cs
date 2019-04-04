@@ -12,45 +12,21 @@ namespace SecuroteckWebApplication.Controllers
 {
     public class UserController : ApiController
     {
-        // User Controller api/User/New 
+        //localhost:<portnumber>/api/user/new?username=UserOne
+        //If a user with the username ‘UserOne’ exists in the database, the server should return "True - User Does Exist!
+        //Did you mean to do a POST to create a new user?" in the body of the result with a status code of OK (200)
+        //If a user with the username ‘UserOne’ does not exist in the database, the server should return "False - User Does
+        //Not Exist! Did you mean to do a POST to create a new user?" in the body of the result with a status code of OK(200).
+        //If there is no string submitted, the server should return "False - User Does Not Exist! Did you mean to do
+        //a POST to create a new user?" in the body of the result with a status code of OK (200).
 
 
-        //TODO create GET request for 
-        //// GET: api/Todo
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<User>>> GetUser()
-        //{
-        //    return await UserContext();
-        //}
+        public IEnumerable Get<User>()
+        {
+
+        }
 
 
 
-        //public HttpResponseMessage PostUser(User user)
-        //{
-            
-
-        //    bool usernameAlreadyExists = (x => x.Username == user.Username);
-
-        //    if (ModelState.IsValid && usernameAlreadyExists != true)
-        //    {
-        //        db.Users.Add(user);
-        //        db.SaveChanges();
-
-        //        HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, user);
-        //        response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = user.ApiKey }));
-        //        return response;
-        //    }
-        //    else
-        //    {
-        //        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState,"The user does exist! Did you mean to do a post reequest?");
-        //    }
-        //}
-
-        //    CspParameters cspParams = new CspParameters();
-        //    cspParams.Flags = CspProviderFlags.UseMachineKeyStore;
-        //    RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider(cspParams);
-        //    string Message = "Hello!";
-        //    byte[] asciiByteMessage = System.Text.Encoding.ASCII.GetBytes(Message);
-        //    byte[] encryptedBytes = rsaProvider.Encrypt(asciiByteMessage, true);
     }
 }
