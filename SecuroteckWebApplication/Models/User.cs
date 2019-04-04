@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,7 +19,6 @@ namespace SecuroteckWebApplication.Models
             Admin,
             User
         }
-
         public User() { }
 
         [Key]
@@ -100,13 +100,14 @@ namespace SecuroteckWebApplication.Models
         {
             //https://stackoverflow.com/questions/7289565/two-conditions-checking-in-where-clause-using-linq-2-entites
             User user = new User();
-            var id = new Guid();
+            //var id = new Guid();
 
             var query = from p in userContext.Users
                         where p.ApiKey == ""
                         && p.UserName == ""
-                        select p;          
-            if(query == true)
+                        select p;
+
+            if(query.Any())
             {
                 return true;
             }
@@ -125,18 +126,12 @@ namespace SecuroteckWebApplication.Models
         {
             //https://stackoverflow.com/questions/1802286/best-way-to-check-if-object-exists-in-entity-framework
 
-            if (context.MyEntity.Any(o => o.Id == idToMatch))
+            UserContext context = new UserContext();
+
+            if (context.Users.Any(o => o.ApiKey == user.ApiKey))
             {
-                return user;
-            }
-            //using (UserContext ctx = new UserContext())
-            //{
-            //    var query = from b in ctx.Users orderby b.UserName select b;
-            //    foreach (var in query)
-            //    {
-            //        return user;
-            //    }
-            //}
+                return;
+            }       
         }
 
         /// <summary>
@@ -148,6 +143,11 @@ namespace SecuroteckWebApplication.Models
             var user = new User { ApiKey = "" };
             userContext.Entry(user).State = EntityState.Deleted;
             userContext.SaveChanges();
+        }
+    
+        public bool Exists<T>(params object[] keys)
+        {
+            return (this.Set<T>().Find(keys) != null);
         }
     }
     // TODO: Make methods which allow us to read from/write to the database 

@@ -23,31 +23,22 @@ namespace SecuroteckWebApplication.Controllers
         /// <summary>
         /// 4.1 
         /// </summary>
-        /// <param name="UserName"></param>
-        /// <returns></returns>
-        public User Get (string UserName)  
+        /// <param name = "UserName" ></ param >
+        /// < returns ></ returns >
+       [ActionName("New")]
+        public string Get([FromUri]string username)
         {
-            if(UserName == UserName)
-            {
-                return "True - User Does Exist! Did you mean to do a POST to create a new user? ";
-            }
-            else
-            {
-                return "False - User Does Not Exist!Did you mean to do a POST to create a new user? ";
-            }
+            UserDatabaseAccess UDB = new UserDatabaseAccess();
+            using(UDB.CheckIfApiKeyExists())
+            return "True - User Does Exist! Did you mean to do a POST to create a new user? " + username;
 
-            if(UserName == string.Empty)
-            {
-                return "False - User Does Not Exist! Did you mean to do a POST to create a new user? ";
-            }
-        }
-
+        }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="UserName"></param>
         /// <returns></returns>
-        public User Post (string UserName)
+        public User Post(string UserName)
         {
 
         }
