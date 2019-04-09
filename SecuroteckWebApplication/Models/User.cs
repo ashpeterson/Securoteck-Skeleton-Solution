@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -24,6 +25,7 @@ namespace SecuroteckWebApplication.Models
         [Key]
         public string ApiKey { get; set; }
 
+        
         public string UserName { get; set; }
 
         public Role UserRole { get; set; }
@@ -38,7 +40,7 @@ namespace SecuroteckWebApplication.Models
     // TODO: You may find it useful to add code here for Logging
     #endregion
 
-    public class UserDatabaseAccess
+    public class UserDatabaseAccess : IDisposable
     {
         #region Task3 
 
@@ -49,7 +51,7 @@ namespace SecuroteckWebApplication.Models
         /// pass the Key back to the client.
         /// </summary>
         /// <param name="userContext"></param>
-        public void CreateNewUserIfNotExist(UserContext userContext)
+        public void CreateNewUserIfNotExist(UserContext userContext) 
         {
 
             User user = new User();
@@ -134,7 +136,7 @@ namespace SecuroteckWebApplication.Models
             }       
         }
 
-        /// <summary>
+        /// <summary>        
         /// 3.5
         /// Delete a user with a given ApiKey from the database.
         /// </summary>
@@ -145,11 +147,19 @@ namespace SecuroteckWebApplication.Models
             userContext.SaveChanges();
         }
     
-        public bool Exists<T>(params object[] keys)
+        //public bool Exists<T>(params object[] keys)
+        //{
+        //    return (this.Set<T>().Find(keys) != null);
+        //}
+
+        public void Dispose()
         {
-            return (this.Set<T>().Find(keys) != null);
+            throw new NotImplementedException();
         }
     }
+
+
+
     // TODO: Make methods which allow us to read from/write to the database 
     #endregion
 }

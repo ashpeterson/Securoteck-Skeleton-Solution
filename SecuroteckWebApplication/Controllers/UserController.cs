@@ -1,48 +1,40 @@
-﻿using SecuroteckWebApplication.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
-using System.Security.Cryptography;
+using SecuroteckWebApplication.Models;
 
 namespace SecuroteckWebApplication.Controllers
 {
     public class UserController : ApiController
     {
-        //localhost:<portnumber>/api/user/new?username=UserOne
-        //If a user with the username ‘UserOne’ exists in the database, the server should return "True - User Does Exist!
-        //Did you mean to do a POST to create a new user?" in the body of the result with a status code of OK (200)
-        //If a user with the username ‘UserOne’ does not exist in the database, the server should return "False - User Does
-        //Not Exist! Did you mean to do a POST to create a new user?" in the body of the result with a status code of OK(200).
-        //If there is no string submitted, the server should return "False - User Does Not Exist! Did you mean to do
-        //a POST to create a new user?" in the body of the result with a status code of OK (200).
-
-        /// <summary>
-        /// 4.1 
-        /// </summary>
-        /// <param name = "UserName" ></ param >
-        /// < returns ></ returns >
-       [ActionName("New")]
-        public string Get([FromUri]string username)
+        // GET: api/User
+        public IEnumerable<User> Get()
         {
-            UserDatabaseAccess UDB = new UserDatabaseAccess();
-            using(UDB.CheckIfApiKeyExists())
-            return "True - User Does Exist! Did you mean to do a POST to create a new user? " + username;
-
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="UserName"></param>
-        /// <returns></returns>
-        public User Post(string UserName)
-        {
-
+            return new string[] { "value1", "value2" };
         }
 
+        // GET: api/User/5
+        public string Get(int id)
+        {
+            return "value";
+        }
 
+        // POST: api/User
+        public void Post([FromBody]string value)
+        {
+        }
+
+        // PUT: api/User/5
+        public void Put(int id, [FromBody]string value)
+        {
+        }
+
+        // DELETE: api/User/5
+        public void Delete(int id)
+        {
+        }
     }
 }
