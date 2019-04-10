@@ -124,16 +124,17 @@ namespace SecuroteckWebApplication.Models
         /// Check if a user with a given ApiKey string exists in the database, returning the User object.
         /// </summary>
         /// <param name="user"></param>
-        public void ReturnUserIfExist(User user)
+        public string ReturnUserIfExist(string apikey)
         {
             //https://stackoverflow.com/questions/1802286/best-way-to-check-if-object-exists-in-entity-framework
 
             UserContext context = new UserContext();
 
-            if (context.Users.Any(o => o.ApiKey == user.ApiKey))
+            if (context.Users.Any(o => o.ApiKey == apikey))
             {
-                return;
-            }       
+                return apikey.ToString(); 
+            }
+            return apikey;
         }
 
         /// <summary>        
