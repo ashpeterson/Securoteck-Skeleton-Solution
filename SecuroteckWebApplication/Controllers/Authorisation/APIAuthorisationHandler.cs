@@ -17,8 +17,14 @@ namespace SecuroteckWebApplication.Controllers
             #region Task5
             // TODO:  Find if a header ‘ApiKey’ exists, and if it does, check the database to determine if the given API Key is valid
             // Then authorise the principle on the current thread using a claim, claimidentity and claimsprinciple
-            #endregion
+
+            UserDatabaseAccess udb = new UserDatabaseAccess();
+           
+            
+
+
             return base.SendAsync(request, cancellationToken);
         }
+
     }
 }

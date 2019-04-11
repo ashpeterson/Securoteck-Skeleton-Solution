@@ -71,18 +71,21 @@ namespace SecuroteckWebApplication.Models
             }
         }
 
+        private string _apiKey;
+
         /// <summary>
         /// 3.2
         /// Check if a user with a given ApiKey string exists in the database, returning true or false.
         /// </summary>
         /// <param name="userContext"></param>
         /// <returns></returns>
-        public bool CheckIfApiKeyExists(UserContext userContext)
+        public bool CheckIfApiKeyExists(string apiKey)
         {
-            User user = new User();
-            var id = new Guid();
+            _apiKey = apiKey;
 
-            if (userContext.Users.Any(o => o.ApiKey == id.ToString()))
+            UserContext uc = new UserContext();
+
+            if (uc.Users.Any(o => o.ApiKey == apiKey.ToString()))
             {
                 return true;
             }
