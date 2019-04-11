@@ -97,7 +97,6 @@
     <Compile Include="Controllers\Authorisation\CustomAuthoriseAttribute.cs" />
     <Compile Include="Controllers\TalkBackController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Enums\Enums.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

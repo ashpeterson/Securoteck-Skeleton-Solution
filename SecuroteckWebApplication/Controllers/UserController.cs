@@ -5,61 +5,59 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using SecuroteckWebApplication.Models;
-using SecuroteckWebApplication.Enums;
 
 namespace SecuroteckWebApplication.Controllers
 {
     public class UserController : ApiController
     {
         // GET: api/User
-        [ActionName("new")]
-        public string Get([FromUri]string username)
-        {
-            HttpResponseMessage responseTrue = Request.CreateResponse(HttpStatusCode.OK, "True - User Does Exist! Did you mean to do a POST to create a new user?");
-            HttpResponseMessage responseFalse = Request.CreateResponse(HttpStatusCode.OK, "False - User Does Not Exist! Did you mean to do a POST to create a new user?");
-            HttpResponseMessage responseNull = Request.CreateResponse(HttpStatusCode.OK, "False - User Does Not Exist! Did you mean to do a POST to create a new user?");
+        [ActionName("New")]
+        public IHttpActionResult Get([FromUri]string username)
+        {        
             UserContext uc = new UserContext();
 
-            if (uc.Users.Any(o => o.UserName == username))
+            var user = uc.Users.Any(o => o.UserName == username);
+
+            if (user == true)
             {
-                return responseTrue.ToString();
+                return Ok("True - User Does Exist! Did you mean to do a POST to create a new user?");
             }
-            else if (uc.Users.Any(o => o.UserName != username))
+            else if (string.IsNullOrEmpty(user.ToString()))
             {
-                return responseFalse.ToString();
+                return Ok("False - User Does Not Exist! Did you mean to do a POST to create a new user? ");
             }
-            else if (string.IsNullOrEmpty(username))
-            {
-                return responseNull.ToString();
-            }
-            return username;
+            return Ok("False - User Does Not Exist! Did you mean to do a POST to create a new user?");
         }
 
-        // GET: api/User/5
-        public string Get(int id)
-        {
-            return "value";
-        }
 
         // POST: api/User
-        public string Post([FromBody]string username)
+        [ActionName("New")]
+        public IHttpActionResult Post([FromBody]string username)
         {
             UserContext uc = new UserContext();
             string apikey = Guid.NewGuid().ToString();
-            HttpResponseMessage responseCreated = Request.CreateResponse(HttpStatusCode.OK, apikey.ToString());
-            HttpResponseMessage responseStringEmpty = Request.CreateResponse(HttpStatusCode.BadRequest, "Oops. Make sure your body contains a string with your username and your Content - Type is Content - Type:application / json");
-            HttpResponseMessage responseUserNameExists = Request.CreateResponse(HttpStatusCode.Forbidden, "Oops. Make sure your body contains a string with your username and your Content - Type is Content - Type:application / json");
+            var user = uc.Users.Any(o => o.UserName == username);
+            var firstUser = uc.Users.Count(o => o.UserName == username);
 
-            if (string.IsNullOrEmpty(username))
+            if (string.IsNullOrEmpty(user.ToString()))
             {
-                return responseStringEmpty.ToString();
+                return BadRequest("Oops.Make sure your body contains a string with your username and your Content - Type is Content - Type:application / json");
             }
-
-            else if (uc.Users.Any(o => o.UserName == username))
+            else if (user == true)
             {
-                return responseUserNameExists.ToString();
+                return Content(HttpStatusCode.Forbidden, "Oops. This username is already in use. Please try again with a new username");
             }
-
+            else if (firstUser == 0)
+            {
+                var usr = new User()
+                {
+                    ApiKey = apikey,
+                    UserName = username,
+                    UserRole = Models.User.Role.Admin
+                };
+                uc.Users.Add(usr);
+                uc.SaveChanges();             
+            }
             else
             {
                 var usr = new User()
@@ -70,9 +68,8 @@ namespace SecuroteckWebApplication.Controllers
                 };
                 uc.Users.Add(usr);
                 uc.SaveChanges();
-                return responseCreated.ToString();
-
             }
+            return Ok(apikey.ToString());
         }
 
         // PUT: api/User/5
