@@ -10,7 +10,7 @@ namespace SecuroteckWebApplication.Controllers
 {
     public class UserController : ApiController
     {
-        // GET: api/User
+        // GET: localhost:<portnumber>/api/user/new?username=UserOne
         [ActionName("New")]
         public IHttpActionResult Get([FromUri]string username)
         {        
@@ -29,8 +29,7 @@ namespace SecuroteckWebApplication.Controllers
             return Ok("False - User Does Not Exist! Did you mean to do a POST to create a new user?");
         }
 
-
-        // POST: api/User
+        // POST: localhost:<portnumber>/api/user/new with “UserOne” in the body of the request
         [ActionName("New")]
         public IHttpActionResult Post([FromBody]string username)
         {
