@@ -5,28 +5,26 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using SecuroteckWebApplication.Models;
+using static SecuroteckWebApplication.Models.Log;
 
 namespace SecuroteckWebApplication.Controllers
 {
     public class UserController : ApiController
     {
         // GET: localhost:<portnumber>/api/user/new?username=UserOne
+        UserDatabaseAccess ud = new UserDatabaseAccess();
+
         [ActionName("New")]
-        public IHttpActionResult Get([FromUri]string username)
-        {        
-            UserContext uc = new UserContext();
-
-            var user = uc.Users.Any(o => o.UserName == username);
-
-            if (user == true)
+        public HttpResponseMessage Get([FromUri]string Username)
+        {
+            if (ud.CheckUserName(Username) == true)
             {
-                return Ok("True - User Does Exist! Did you mean to do a POST to create a new user?");
+                return Request.CreateErrorResponse(HttpStatusCode.OK, "True - User Does Exist! Did you mean to do a POST to create a new user?");
             }
-            else if (string.IsNullOrEmpty(user.ToString()))
+            else
             {
-                return Ok("False - User Does Not Exist! Did you mean to do a POST to create a new user? ");
+                return Request.CreateErrorResponse(HttpStatusCode.OK, "False - User Does Not Exist! Did you mean to do a POST to create a new user?");
             }
-            return Ok("False - User Does Not Exist! Did you mean to do a POST to create a new user?");
         }
 
         // POST: localhost:<portnumber>/api/user/new with “UserOne” in the body of the request
@@ -77,8 +75,36 @@ namespace SecuroteckWebApplication.Controllers
         }
 
         // DELETE: api/User/5
-        public void Delete(int id)
+        [APIAuthorise]
+        [ActionName("RemoveUser")]
+        public HttpResponseMessage Delete([FromUri]string Username)
         {
+
+            IEnumerable<string> values;
+            this.Request.Headers.TryGetValues("ApiKey", out values);
+
+            foreach (string v in values)
+            {
+                if (ud.CheckApi(v))
+                {
+                    ud.AddUserLogs("User Requested /user/removeuser", v);
+                }
+            }
+
+            foreach (string v in values)
+            {
+                if (ud.CheckApiandUserName(v, Username))
+                {
+                    ud.DeleteUserApi(v);
+                    return Request.CreateErrorResponse(HttpStatusCode.OK, "true");
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.OK, "false");
+                }
+
+            }
+            return Request.CreateErrorResponse(HttpStatusCode.OK, "false");
         }
     }
 }
