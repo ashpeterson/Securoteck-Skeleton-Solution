@@ -13,8 +13,8 @@ namespace SecuroteckWebApplication.Models
         #region Task2
         public enum Role
         {
-            Admin,
-            User
+            Admin =  0,
+            User =  1
         }
         public User() { Logs = new List<Log>(); }
 
@@ -85,19 +85,15 @@ namespace SecuroteckWebApplication.Models
                     IQueryable<User> users = from b in ctx.Users
                                              where b.UserName.Contains(Name)
                                              select b;
+
                     foreach (User result in users)
                     {
                         if (result.UserName == Name)
                         {
                             return true;
                         }
-                        else
-                        {
-
-                        }
                     }
                     return false;
-
                 }
             }
 
@@ -220,6 +216,18 @@ namespace SecuroteckWebApplication.Models
                         ctx.SaveChanges();
                     }
                 }
+            }
+
+            public void ChangeRole ([FromUri]string Key, string Role)
+            {
+                var user = new User() {ApiKey = Key,  UserRole =Role.ToString() };
+                using (var ctx = new UserContext())
+                {
+                    ctx.Users.Attach(user);
+                    ctx.Entry(user).Property(x => x.UserRole).IsModified = true;
+                    ctx.SaveChanges();
+                }
+
             }
 
             public void Dispose()

@@ -11,9 +11,10 @@ namespace SecuroteckWebApplication.Controllers
 {
     public class UserController : ApiController
     {
-        // GET: localhost:<portnumber>/api/user/new?username=UserOne
+       
         UserDatabaseAccess ud = new UserDatabaseAccess();
 
+        // GET: localhost:<portnumber>/api/user/new?username=UserOne
         [ActionName("New")]
         public HttpResponseMessage Get([FromUri]string Username)
         {
@@ -74,6 +75,17 @@ namespace SecuroteckWebApplication.Controllers
         [ActionName("ChangeRole")]
         public HttpResponseMessage Post([FromBody]string Username,  string Role)
         {
+            IEnumerable<string> values;
+            this.Request.Headers.TryGetValues("ApiKey", out values);
+
+            foreach(string v in values)
+            {
+                if (ud.CheckApi(v) == true)
+                {
+                   
+                }
+            }
+
 
         }
 
