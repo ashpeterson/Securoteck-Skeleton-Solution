@@ -69,6 +69,14 @@ namespace SecuroteckWebApplication.Controllers
             return Ok(apikey.ToString());
         }
 
+        [APIAuthorise]
+        [AdminRole]
+        [ActionName("ChangeRole")]
+        public HttpResponseMessage Post([FromBody]string Username,  string Role)
+        {
+
+        }
+
         // PUT: api/User/5
         public void Put(int id, [FromBody]string value)
         {
@@ -79,7 +87,6 @@ namespace SecuroteckWebApplication.Controllers
         [ActionName("RemoveUser")]
         public HttpResponseMessage Delete([FromUri]string Username)
         {
-
             IEnumerable<string> values;
             this.Request.Headers.TryGetValues("ApiKey", out values);
 

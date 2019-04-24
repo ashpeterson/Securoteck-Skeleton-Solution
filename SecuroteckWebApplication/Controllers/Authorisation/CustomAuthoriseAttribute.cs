@@ -23,5 +23,19 @@ namespace SecuroteckWebApplication.Controllers
 
     #region Task7
     // TODO: Add Admin role authorisation attribute
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+    public class AdminRoleAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(HttpActionContext actionContext)
+        {
+            if (!Thread.CurrentPrincipal.IsInRole("Admin")) //  check to see if the current principle on the thread is in the role “Admin”. 
+            {
+                // Respond with an 'Unauthorised' status code and error
+                actionContext.Response = actionContext.ControllerContext.Request.CreateErrorResponse(HttpStatusCode.Unauthorized, "Unauthorized. Admin access only.");
+            }
+        }
+
+    }
+
     #endregion
 }

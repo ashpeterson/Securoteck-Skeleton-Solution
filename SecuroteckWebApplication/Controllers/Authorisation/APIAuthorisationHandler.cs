@@ -34,7 +34,7 @@ namespace SecuroteckWebApplication.Controllers
                         User user = userDatabaseAccess.CheckApiForUser(v);
                         var claims = new List<Claim>
                     {
-                    new Claim(ClaimTypes.Name, user.UserName)
+                    new Claim(ClaimTypes.Name, user.UserName, ClaimTypes.Role, user.UserRole.ToString())
                     };
                         var id = new ClaimsIdentity(claims, authenticationType: "ApiKey");
                         var principle = new ClaimsPrincipal(id);
@@ -42,32 +42,6 @@ namespace SecuroteckWebApplication.Controllers
                     }
                 }
             }
-
-
-
-            //IEnumerable<string> headerValues;
-            //var userIdFromHeader = string.Empty;
-
-            //if (request.Headers.TryGetValues("MyCustomID", out headerValues))
-            //{
-            //    userIdFromHeader = headerValues.FirstOrDefault();
-            //}
-
-            //UserContext uc = new UserContext();
-            //UserDatabaseAccess udb = new UserDatabaseAccess();
-
-            //var query = from u in uc.Users
-            //            where u.ApiKey == userIdFromHeader
-            //            select u;
-
-            //if (udb.CheckIfApiKeyExists(userIdFromHeader) == true)
-            //{
-            //    ClaimTypes.Name = uc.
-            //}
-
-
-
-
             return base.SendAsync(request, cancellationToken);
         }
 
