@@ -24,7 +24,7 @@ namespace SecuroteckWebApplication.Models
 
         public string UserName { get; set; }
 
-        public Role UserRole { get; set; }
+        public string UserRole { get; set; }
 
         public virtual ICollection<Log> Logs { get; set; }
     }
@@ -72,7 +72,7 @@ namespace SecuroteckWebApplication.Models
                 {
                     using (UserContext uc = new UserContext())
                     {
-                        user = new User { ApiKey = id.ToString(), UserName = "User 1", UserRole = User.Role.User };
+                        user = new User { ApiKey = id.ToString(), UserName = "User 1", UserRole = "Admin" };
                     }
 
                 }
@@ -218,16 +218,24 @@ namespace SecuroteckWebApplication.Models
                 }
             }
 
-            public void ChangeRole ([FromUri]string Key, string Role)
+            public bool ChangeRole ([FromUri]string Key, string Role)
             {
-                var user = new User() {ApiKey = Key,  UserRole =Role.ToString() };
-                using (var ctx = new UserContext())
+                var user = new User() {ApiKey = Key,  UserRole = Role};
+                try
                 {
-                    ctx.Users.Attach(user);
-                    ctx.Entry(user).Property(x => x.UserRole).IsModified = true;
-                    ctx.SaveChanges();
+                    using (var ctx = new UserContext())
+                    {
+                        ctx.Users.Attach(user);
+                        ctx.Entry(user).Property(x => x.UserRole).IsModified = true;
+                        ctx.SaveChanges();
+                        return true;
+                    }
                 }
+                catch (Exception)
+                {
 
+                    return false;
+                }                          
             }
 
             public void Dispose()
@@ -275,18 +283,10 @@ namespace SecuroteckWebApplication.Models
                             }
                             throw;
                         }
-                    }
-                    else
-                    {
-
-                    }
+                    }               
                 }
             }
         }
-
-
-
-        // TODO: Make methods which allow us to read from/write to the database 
         #endregion
     }
 }

@@ -95,6 +95,7 @@
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Controllers\Authorisation\APIAuthorisationHandler.cs" />
     <Compile Include="Controllers\Authorisation\CustomAuthoriseAttribute.cs" />
+    <Compile Include="Controllers\ProtectedController.cs" />
     <Compile Include="Controllers\TalkBackController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -111,6 +112,10 @@
     <Compile Include="Migrations\201903201051049_enumtest.cs" />
     <Compile Include="Migrations\201903201051049_enumtest.Designer.cs">
       <DependentUpon>201903201051049_enumtest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904251148517_UserRole.cs" />
+    <Compile Include="Migrations\201904251148517_UserRole.Designer.cs">
+      <DependentUpon>201904251148517_UserRole.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\User.cs" />
@@ -138,6 +143,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903201051049_enumtest.resx">
       <DependentUpon>201903201051049_enumtest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904251148517_UserRole.resx">
+      <DependentUpon>201904251148517_UserRole.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

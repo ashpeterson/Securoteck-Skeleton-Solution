@@ -51,7 +51,7 @@ namespace SecuroteckWebApplication.Controllers
                 {
                     ApiKey = apikey,
                     UserName = username,
-                    UserRole = Models.User.Role.Admin
+                    UserRole = "Admin"
                 };
                 uc.Users.Add(usr);
                 uc.SaveChanges();             
@@ -62,7 +62,7 @@ namespace SecuroteckWebApplication.Controllers
                 {
                     ApiKey = apikey,
                     UserName = username,
-                    UserRole = Models.User.Role.User
+                    UserRole = "Admin"
                 };
                 uc.Users.Add(usr);
                 uc.SaveChanges();
@@ -70,6 +70,7 @@ namespace SecuroteckWebApplication.Controllers
             return Ok(apikey.ToString());
         }
 
+        
         [APIAuthorise]
         [AdminRole]
         [ActionName("ChangeRole")]
@@ -78,15 +79,28 @@ namespace SecuroteckWebApplication.Controllers
             IEnumerable<string> values;
             this.Request.Headers.TryGetValues("ApiKey", out values);
 
-            foreach(string v in values)
+            var searchFor = new List<string>();
+            searchFor.Add("Admin");
+            searchFor.Add("User");
+
+            bool roleCheck = searchFor.Any(word => Role.Contains(word));
+
+            foreach (string v in values)
             {
-                if (ud.CheckApi(v) == true)
+                if (ud.ChangeRole(v, Role) == true)
                 {
-                   
+                    return Request.CreateErrorResponse(HttpStatusCode.OK, "DONE");
+                }
+                else if (ud.CheckUserName(Username) == false)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "NOT DONE: Username does not exist");
+                }
+                else if (roleCheck == false)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "NOT DONE: Role does not exist");
                 }
             }
-
-
+            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "NOT DONE: An error occurred");
         }
 
         // PUT: api/User/5
